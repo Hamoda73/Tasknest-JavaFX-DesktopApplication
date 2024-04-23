@@ -1,0 +1,7 @@
+.small-scrollbars {
+    -fx-scrollbar-size: 4px;  // Adjust value as needed
+}
+
+#myScrollPane > .scroll-bar {
+    -fx-scrollbar-size: 3px;
+}

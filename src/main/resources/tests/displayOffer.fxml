@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="785.0" prefWidth="1900.0" style="-fx-background-color: #31768f;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tasknest.controllers.offer.DisplayOffer">
+    <children>
+        <VBox prefHeight="680.0" prefWidth="216.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="77.0" prefWidth="216.0" style="-fx-background-color: white; -fx-background-radius: 100;">
+                    <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/logo.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets left="-5.0" />
+                            </VBox.margin>
+                        </ImageView>
+                    </children>
+                    <VBox.margin>
+                        <Insets left="10.0" right="15.0" top="40.0" />
+                    </VBox.margin>
+                </VBox>
+                <VBox prefHeight="147.0" prefWidth="194.0">
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                    <children>
+                        <ImageView fitHeight="116.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/login.png" />
+                            </image>
+                            <VBox.margin>
+                                <Insets left="50.0" />
+                            </VBox.margin>
+                        </ImageView>
+                    </children>
+                </VBox>
+                <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="62.0" text="Home" textFill="WHITE">
+                            <font>
+                                <Font name="Calibri Bold Italic" size="24.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="120.0" text="Freelancers" textFill="WHITE">
+                            <font>
+                                <Font name="Calibri Bold Italic" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="129.0" text="Reclamation" textFill="WHITE">
+                            <font>
+                                <Font name="Calibri Bold Italic" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="78.0" text="Forum" textFill="WHITE">
+                            <font>
+                                <Font name="Calibri Bold Italic" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="39.0" prefWidth="191.0" text="Check your Offers">
+                            <font>
+                                <Font name="Calibri Bold Italic" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <Label alignment="CENTER" prefHeight="39.0" prefWidth="191.0" text="Post an offer">
+                    <font>
+                        <Font name="Calibri Bold Italic" size="24.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets left="10.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+        <VBox layoutX="216.0" layoutY="7.0" prefHeight="769.0" prefWidth="1284.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+            <children>
+                <HBox prefHeight="169.0" prefWidth="1098.0" style="-fx-background-color: #6cb9b9; -fx-background-radius: 25;">
+                    <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="30.0" />
+                    </VBox.margin>
+                    <children>
+                        <ImageView fitHeight="175.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/vector.png" />
+                            </image>
+                        </ImageView>
+                        <VBox prefHeight="175.0" prefWidth="876.0">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="103.0" prefWidth="876.0" text="Welcome to TaskNest !" textFill="WHITE">
+                                    <font>
+                                        <Font name="Calibri Bold Italic" size="57.0" />
+                                    </font>
+                                </Label>
+                                <Label alignment="CENTER" prefHeight="101.0" prefWidth="883.0" text=" Offer(s) you have posted">
+                                    <font>
+                                        <Font name="Calibri Bold Italic" size="37.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox prefHeight="556.0" prefWidth="1284.0">
+                    <children>
+                        <ScrollPane prefHeight="551.0" prefWidth="1259.0" style="-fx-background-color: transparent;">
+                            <HBox.margin>
+                                <Insets left="10.0" top="5.0" />
+                            </HBox.margin>
+                            <content>
+                                <HBox prefHeight="672.0" prefWidth="1246.0">
+                           <children>
+                              <VBox prefHeight="662.0" prefWidth="224.0" />
+                              <VBox prefHeight="662.0" prefWidth="1032.0">
+                                 <children>
+                                    <HBox prefHeight="228.0" prefWidth="982.0" style="-fx-border-color: #6cb9b9; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <children>
+                                          <HBox prefHeight="221.0" prefWidth="991.0" style="-fx-border-color: #6cb9b9; -fx-background-color: white; -fx-border-radius: 20; -fx-background-radius: 20;">
+                                             <children>
+                                                <ImageView fitHeight="184.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true" styleClass="ra">
+                                                   <image>
+                                                      <Image url="@../../../../../../Downloads/422390369_396304522845827_5582686133777850641_n-removebg-preview.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets top="20.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <VBox prefHeight="219.0" prefWidth="697.0">
+                                                   <children>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="54.0" prefWidth="134.0" text="Entreprise :" textFill="#9e2e2e">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="54.0" prefWidth="134.0" text=" Domain :" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="31.0" prefWidth="151.0" text=" Description :" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="54.0" prefWidth="134.0" text="post :" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="31.0" prefWidth="150.0" text="Localisation :" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="54.0" prefWidth="134.0" text="Period:" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="53.0" prefWidth="651.0">
+                                                         <children>
+                                                            <Label prefHeight="54.0" prefWidth="134.0" text=" Salary :" textFill="#8c3434">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="27.0" />
+                                                               </font>
+                                                               <HBox.margin>
+                                                                  <Insets right="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                            <Label prefHeight="57.0" prefWidth="118.0" text="Label">
+                                                               <font>
+                                                                  <Font name="Calibri Bold Italic" size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="219.0" prefWidth="160.0">
+                                                   <children>
+                                                      <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="83.0" style="-fx-background-color: #6cb9b9; -fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20;" text="Edit" textFill="#fff7f7">
+                                                         <font>
+                                                            <Font name="Calibri Bold Italic" size="24.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="10.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets left="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="82.0" style="-fx-background-color: red; -fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20;" text="Delete" textFill="#fcf3f3">
+                                                         <font>
+                                                            <Font name="Calibri Bold Italic" size="24.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="10.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets left="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </Button>
+                                                      <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="84.0" style="-fx-background-color: orange; -fx-background-radius: 20; -fx-border-color: BLACK; -fx-border-radius: 20;" text="Apps" textFill="#fff7f7">
+                                                         <font>
+                                                            <Font name="Calibri Bold Italic" size="24.0" />
+                                                         </font>
+                                                         <padding>
+                                                            <Insets bottom="10.0" top="10.0" />
+                                                         </padding>
+                                                         <VBox.margin>
+                                                            <Insets left="10.0" top="10.0" />
+                                                         </VBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets right="30.0" top="30.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                                </HBox>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

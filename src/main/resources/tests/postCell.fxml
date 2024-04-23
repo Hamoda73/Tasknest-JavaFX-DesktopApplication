@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="dfd" prefHeight="87.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tests.PostCell">
+   <children>
+      <Text fx:id="postTitle" layoutX="25.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="post title">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Text>
+      <Text layoutX="34.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Created by" />
+      <Text fx:id="userName" layoutX="99.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="user Name" />
+      <Text fx:id="postDate" layoutX="34.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of post" />
+      <Text fx:id="viewsNumber" layoutX="487.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of views" />
+      <ImageView fx:id="userImage" fitHeight="52.0" fitWidth="57.0" layoutX="520.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
