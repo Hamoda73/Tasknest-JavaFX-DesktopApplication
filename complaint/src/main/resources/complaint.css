@@ -1,0 +1,33 @@
+/* Stylesheet for Complaint Form */
+
+.label-title {
+    -fx-font-size: 24px; /* Larger font size */
+    -fx-font-weight: bold; /* Bold weight */
+    -fx-text-fill: #333; /* Dark text color */
+}
+
+.text-field, .text-area {
+    -fx-pref-width: 300px; /* Preferred width */
+    -fx-font-size: 16px; /* Font size */
+    -fx-background-color: #f9f9f9; /* Light gray background */
+    -fx-border-color: #ccc; /* Light gray border color */
+    -fx-border-width: 1px; /* Border width */
+    -fx-border-radius: 5px; /* Border radius */
+    -fx-padding: 10px; /* Padding */
+}
+
+.button {
+    -fx-pref-width: 150px; /* Preferred width */
+    -fx-background-color: #4CAF50; /* Green background color */
+    -fx-text-fill: white; /* White text color */
+    -fx-font-weight: bold; /* Bold weight */
+    -fx-font-size: 16px; /* Font size */
+    -fx-border-radius: 5px; /* Border radius */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-cursor: hand; /* Hand cursor on hover */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10, 0.0 , 0 , 2 );
+}
+
+.button:hover {
+    -fx-background-color: #45a049; /* Darker green on hover */
+}
