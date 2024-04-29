@@ -109,7 +109,7 @@ public class OfferService implements IService<offers>{
 
     private List<offers> allOffers = new ArrayList<>();
 
-    // Add an offer to the list of all offers
+
     public void addOffer(offers offer) {
         allOffers.add(offer);
     }
@@ -164,20 +164,20 @@ public class OfferService implements IService<offers>{
             statement.setInt(1, offerId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                // Retrieve application data from the result set
+
                 int applicationId = resultSet.getInt("id");
                 int user_id = resultSet.getInt("user_id");
                 int offer_id = resultSet.getInt("offers_id");
                 String cv = resultSet.getString("cv");
 
-                // Create an Application object using the retrieved data
+
                 Application application = new Application(applicationId, offer_id, user_id, cv);
 
-                // Add the Application object to the list
+
                 applications.add(application);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception according to your application's error handling strategy
+            e.printStackTrace();
         }
         return applications;
     }

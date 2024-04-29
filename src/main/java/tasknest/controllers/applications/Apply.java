@@ -46,7 +46,7 @@ public class Apply{
     private int offer_Id;
     @FXML
     private ImageView cvImageView;
-    private int user_Id=25;//freelancer same in offerApps**********************
+    private int user_Id=25;           //freelancer same in offerApps**********************
     public void setUserAndOfferIds( int offerId) {
 
          offer_Id = offerId;
@@ -57,7 +57,7 @@ public class Apply{
         applicationService = new ApplicationService();
         userService = new UserService();
 
-        // Fetch user information and populate labels
+        // Fetch user information
 
             users user = userService.getUserById(user_Id);
             if (user != null) {
@@ -81,13 +81,13 @@ public class Apply{
 
     @FXML
     private void uploadCV(ActionEvent event) {
-        // Create a file chooser
+
         FileChooser fileChooser = new FileChooser();
 
-        // Set the title of the file chooser dialog
+
         fileChooser.setTitle("Choose PDF File");
 
-        // Show the file chooser dialog and wait for user selection
+
         File selectedFile = fileChooser.showOpenDialog(null);
 
         // If a file is selected
@@ -95,15 +95,15 @@ public class Apply{
             // Get the file name
             String fileName = selectedFile.getName();
 
-            // Check if the file name ends with ".pdf" (case insensitive)
+
             if (fileName.toLowerCase().endsWith(".pdf")) {
-                // Get the absolute path of the selected file
+
                 String filePath = selectedFile.getAbsolutePath();
 
-                // Set the text of cvField to the path of the selected file
+
                 cvField.setText(filePath);
             } else {
-                // Show an error message if the selected file is not a PDF
+
                 showAlert(Alert.AlertType.ERROR, "Error", "Invalid File Type", "Please select a PDF file.");
             }
         }
@@ -113,9 +113,9 @@ public class Apply{
 
    @FXML
    private void applyForOffer(ActionEvent event) {
-       // Get input values from text fields
+
        String cvContent = cvField.getText();
-       String cvImagePath = cvField.getText(); // You need to get the file path from cvField
+       String cvImagePath = cvField.getText();
 
        // Validate input fields
        if (cvContent.isEmpty() || cvImagePath.isEmpty()) {

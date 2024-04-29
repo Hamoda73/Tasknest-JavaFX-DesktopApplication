@@ -3,10 +3,12 @@ package tasknest.controllers.offer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,10 +26,21 @@ public class Displayoffuser  {
     @FXML
     private ScrollPane offersScrollPane;
 
+    @FXML
+    private Pagination pagination;
+
+
+    private int totalPages;
     private OfferService offerService;
 
-    // Static user ID variable
+    // Static user
     private  int STATIC_USER_ID = 2;
+
+
+
+
+
+
 
 //for the edit
 
@@ -35,11 +48,15 @@ public class Displayoffuser  {
 
     public void initialize() {
         offerService = new OfferService();
+
         populateOffers();
         System.out.println("helloooooooooooo");
-
-
     }
+
+
+
+
+
 //users offers
    /* private void populateOffers() {
         // Fetch offers posted by the static user ID
@@ -55,7 +72,7 @@ public class Displayoffuser  {
         offersScrollPane.setContent(offersContainer);
     }*/
 
-
+//before paginationnn
     private void populateOffers() {
         // Fetch offers posted by the static user ID
         List<offers> userOffers = offerService.afficheruseroffers(STATIC_USER_ID);
@@ -63,7 +80,7 @@ public class Displayoffuser  {
         VBox offersContainer = new VBox(10);
 
         if (userOffers.isEmpty()) {
-            // Display a message when there are no offers available
+
             AnchorPane noOffersPane = new AnchorPane();
             Label noOffersLabel = new Label("No offers yet");
             noOffersLabel.getStyleClass().add("no-offers-label");
@@ -98,7 +115,7 @@ public class Displayoffuser  {
 
 
         ImageView imageView = new ImageView();
-        String imageUrl = getClass().getResource("/images/taswira.png").toExternalForm(); // Path to your image resource
+        String imageUrl = getClass().getResource("/images/taswira.png").toExternalForm();
         Image image = new Image(imageUrl);
 
         imageView.setImage(image);
@@ -136,9 +153,12 @@ public class Displayoffuser  {
         descriptionPrefixLabel.setLayoutY(120);
         descriptionPrefixLabel.setStyle(" -fx-text-fill: #892193FF;");
 
+
         Label descriptionLabel = new Label(offer.getDescription());
         descriptionLabel.setLayoutX(420);
         descriptionLabel.setLayoutY(120);
+       /* descriptionLabel.setMaxWidth(600); // Set the maximum width for wrapping
+        descriptionLabel.setWrapText(true);*/
 
         Label localisationPrefixLabel = new Label("Location: ");
         localisationPrefixLabel.setLayoutX(300);
@@ -201,10 +221,10 @@ public class Displayoffuser  {
         editButton.setLayoutY(280);
         editButton.getStyleClass().add("edit-button");
         editButton.setOnAction(event -> {
-           handleEditButton(offer); // Pass offer data to the handler method
+           handleEditButton(offer);
         });
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/job-seeking.gif"));
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/job.gif"));
         ImageView gifImageView = new ImageView(gifImage);
 
 
@@ -286,20 +306,20 @@ public class Displayoffuser  {
 */
 
     private void handleEditButton(offers offer) {
-        // Navigate to the EditOfferController
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/editOffer.fxml"));
         Parent root;
         try {
             root = loader.load();
 
-            // Retrieve the controller instance
+
             editOffer controller = loader.getController();
 
-            // Pass the offer and offerService to the EditOffer Controller
+
             controller.setEditedOffer(offer);
             controller.setOfferService(offerService);
 
-            // Get the current scene
+
             Scene scene = offersScrollPane.getScene();
             scene.setRoot(root);
         } catch (IOException e) {

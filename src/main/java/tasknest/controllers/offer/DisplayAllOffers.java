@@ -1,15 +1,16 @@
 package tasknest.controllers.offer;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,19 +27,109 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class DisplayAllOffers implements Initializable {
-
+    private ObservableList<offers> allOffersList = FXCollections.observableArrayList();
     @FXML
     ScrollPane offersScrollPane;
-
+    @FXML
+    private TextField searchField;
     private OfferService offerService;
+
+    @FXML
+    private Pagination pagination;
+
+    private static final int ITEMS_PER_PAGE = 3;
+
+    @FXML
+    private VBox cardsContainer;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
+
+        allOffersList.addAll(offerService.getAllOffers());
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterOffers(newValue);});
+
         populateOffers();
+        setupPagination();
     }
+    private void setupPagination() {
+        int pageCount = (int) Math.ceil((double) allOffersList.size() / ITEMS_PER_PAGE);
+        pagination = new Pagination(pageCount, 0);
+        pagination.setPageFactory(this::createPage);
+        offersScrollPane.setContent(pagination);
+    }
+
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ITEMS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, allOffersList.size());
+        List<offers> currentPageOffers = allOffersList.subList(fromIndex, toIndex);
+
+        VBox pageContent = new VBox(10);
+        for (offers offer : currentPageOffers) {
+            AnchorPane card = createOfferCard(offer);
+            pageContent.getChildren().add(card);
+        }
+        return pageContent;
+    }
+
+
+
+  /*  private void filterOffers(String query) {
+        Predicate<offers> containsQuery = offer ->
+                offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
+                        String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
+
+        FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
+
+        VBox offersContainer = new VBox(10);
+
+        for (offers offer : filteredList) {
+            AnchorPane card = createOfferCard(offer);
+            offersContainer.getChildren().add(card);
+        }
+
+        offersScrollPane.setContent(offersContainer);
+    }*/
+
+
+
+
+  private void filterOffers(String query) {
+    Predicate<offers> containsQuery = offer ->
+            offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
+            offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
+            offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
+            offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+            offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
+            offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
+            String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
+
+    FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
+
+    VBox offersContainer = new VBox(10);
+
+    for (offers offer : filteredList) {
+        AnchorPane card = createOfferCard(offer);
+        offersContainer.getChildren().add(card);
+    }
+
+    offersScrollPane.setContent(offersContainer);
+}
+
+
+
 
     private void populateOffers() {
         List<offers> allOffers = offerService.getAllOffers();
@@ -52,6 +143,7 @@ public class DisplayAllOffers implements Initializable {
 
         offersScrollPane.setContent(offersContainer);
     }
+
 
     private AnchorPane createOfferCard(offers offer) {
 
@@ -106,9 +198,12 @@ public class DisplayAllOffers implements Initializable {
         descriptionPrefixLabel.setLayoutY(120);
         descriptionPrefixLabel.setStyle(" -fx-text-fill: #892193FF;");
 
+
         Label descriptionLabel = new Label(offer.getDescription());
         descriptionLabel.setLayoutX(420);
         descriptionLabel.setLayoutY(120);
+      //  descriptionLabel.setMaxWidth(300); // Set the maximum width for wrapping
+        //descriptionLabel.setWrapText(true);
 
 
 
@@ -164,7 +259,7 @@ public class DisplayAllOffers implements Initializable {
 
 
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/job.gif"));
+      /*  Image gifImage = new Image(getClass().getResourceAsStream("/images/job.gif"));
         ImageView gifImageView = new ImageView(gifImage);
 
 
@@ -178,7 +273,7 @@ public class DisplayAllOffers implements Initializable {
 
 
         });
-
+*/
 
 
        /* applyButton.setOnAction(event -> {
@@ -202,7 +297,7 @@ public class DisplayAllOffers implements Initializable {
 
         */
 
-        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, applyButton,gifImageView);
+        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, applyButton/*,gifImageView*/);
 
         return card;
     }
@@ -217,6 +312,7 @@ public class DisplayAllOffers implements Initializable {
         return -1; // Return -1 if no offer is selected
     }*/
 
+
     private void redirectToApply(MouseEvent event, int offerId) {
         try {
 
@@ -224,7 +320,7 @@ public class DisplayAllOffers implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/Apply.fxml"));
             Parent root = loader.load();
 
-            // Pass the user and offer IDs to the Apply controller
+            // pass the user and offer idss to the Apply controller
             Apply applyController = loader.getController();
             applyController.setUserAndOfferIds(offerId);
 
@@ -260,4 +356,16 @@ public class DisplayAllOffers implements Initializable {
     }
 
 
+
+
+    @FXML
+    private void navigateToDisplayAllOffers() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/DisplayAllOffers.fxml"));
+            Parent root = loader.load();
+            offersScrollPane.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -90,7 +90,7 @@ public class displayappsback {
 
         imageView.setImage(image);
         imageView.getStyleClass().add("image-view");
-        imageView.setFitWidth(300); // Set the desired width
+        imageView.setFitWidth(300);
         imageView.setFitHeight(200);
         imageView.setLayoutX(0);
         imageView.setLayoutY(5);
@@ -190,31 +190,29 @@ public class displayappsback {
             if (file.exists() && Desktop.isDesktopSupported()) {
                 Desktop.getDesktop().open(file);
             } else {
-                // Show an alert if the file doesn't exist or if the desktop is not supported
+
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Could not open PDF file.", ButtonType.OK);
                 alert.showAndWait();
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your application's error handling strategy
+            e.printStackTrace();
         }
     }
     @FXML
     private void navigateAlloffers(MouseEvent event) {
         try {
-            // Load the FXML file of the DisplayAllOffers view
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/displayofferback.fxml"));
             Parent root = loader.load();
 
-            // Create a new scene
+
             Scene scene = new Scene(root);
 
-            // Get the current stage
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Set the scene on the stage
             stage.setScene(scene);
 
-            // Show the stage
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

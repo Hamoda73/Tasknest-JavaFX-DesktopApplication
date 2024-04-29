@@ -56,7 +56,7 @@ public class seeMyApps {
         VBox appsContainer = new VBox(10);
 
         if (userApps.isEmpty()) {
-            // Display a message when there are no user applications available
+
             AnchorPane noAppsPane = new AnchorPane();
             Label noAppsLabel = new Label("You didn't Apply yet");
             noAppsLabel.getStyleClass().add("no-apps-label");
@@ -67,7 +67,7 @@ public class seeMyApps {
             noAppsPane.getChildren().add(noAppsLabel);
             appsContainer.getChildren().add(noAppsPane);
         } else {
-            // Populate user applications if available
+
             for (Application app : userApps) {
                 AnchorPane card = createUserAppsCard(app);
                 System.out.println("app= " + app);
@@ -89,7 +89,7 @@ public class seeMyApps {
 
         imageView.setImage(image);
         imageView.getStyleClass().add("image-view");
-        imageView.setFitWidth(300); // Set the desired width
+        imageView.setFitWidth(300);
         imageView.setFitHeight(200);
         imageView.setLayoutX(0);
         imageView.setLayoutY(5);
@@ -208,7 +208,7 @@ public class seeMyApps {
                 alert.showAndWait();
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your application's error handling strategy
+            e.printStackTrace();
         }
 
 
@@ -219,20 +219,20 @@ public class seeMyApps {
     @FXML
     private void navigateAlloffers(MouseEvent event) {
         try {
-            // Load the FXML file of the DisplayAllOffers view
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/DisplayAllOffers.fxml"));
             Parent root = loader.load();
 
-            // Create a new scene
+
             Scene scene = new Scene(root);
 
-            // Get the current stage
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Set the scene on the stage
+
             stage.setScene(scene);
 
-            // Show the stage
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

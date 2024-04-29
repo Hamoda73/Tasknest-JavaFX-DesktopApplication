@@ -57,7 +57,7 @@ public class editOffer {
 
     public void setEditedOffer(offers editedOffer) {
         this.editedOffer = editedOffer;
-        // Populate fields with existing offer data when editedOffer is set
+        // data
         if (editedOffer != null) {
             entrepriseNameField.setText(editedOffer.getEntreprise_name());
             domainField.setText(editedOffer.getDomain());
@@ -76,7 +76,7 @@ public class editOffer {
             return;
         }
 
-        // Update the edited offer with the new values from the fields
+
         editedOffer.setEntreprise_name(entrepriseNameField.getText());
         editedOffer.setDomain(domainField.getText());
         editedOffer.setDescription(descriptionField.getText());
@@ -85,13 +85,13 @@ public class editOffer {
         editedOffer.setPeriod(periodField.getText());
         editedOffer.setSalary(Float.parseFloat(salaryField.getText())); // Convert salary to float
 
-        // Save the modified offer in the database
+
         offerService.modifier(editedOffer);
 
-        // Display a message dialog indicating successful modification
+
         showAlert(Alert.AlertType.INFORMATION, "Success", "Offer Modified", "The offer has been modified successfully.");
 
-        // Optionally, provide feedback to the user
+
         System.out.println("Offer modified successfully.");
     }
 

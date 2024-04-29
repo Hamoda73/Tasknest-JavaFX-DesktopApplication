@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,14 +35,43 @@ public class displayofferback implements Initializable {
     ScrollPane offersScrollPane;
 
     private OfferService offerService;
+    @FXML
+   // private Pagination pagination;
+    private static final int ITEMS_PER_PAGE = 3;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
         populateOffers();
+        //setupPagination();
     }
 
-    private void populateOffers() {
+    /*private void setupPagination() {
+        List<offers> allOffers = offerService.getAllOffers();
+        int pageCount = (int) Math.ceil((double) allOffers.size() / ITEMS_PER_PAGE);
+        pagination.setPageCount(pageCount);
+        pagination.setCurrentPageIndex(0);
+        pagination.setPageFactory(this::createPage);
+    }*/
+
+
+   /* private Node createPage(int pageIndex) {
+        List<offers> allOffers = offerService.getAllOffers();
+        int fromIndex = pageIndex * ITEMS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, allOffers.size());
+        List<offers> currentPageOffers = allOffers.subList(fromIndex, toIndex);
+
+        VBox pageContent = new VBox(10);
+        for (offers offer : currentPageOffers) {
+            AnchorPane card = createOfferCard(offer);
+            pageContent.getChildren().add(card);
+        }
+        return pageContent;
+    }/*
+
+    */
+    /*private void populateOffers() {
         List<offers> allOffers = offerService.getAllOffers();
 
         VBox offersContainer = new VBox(10);
@@ -52,7 +82,19 @@ public class displayofferback implements Initializable {
         }
 
         offersScrollPane.setContent(offersContainer);
+    }*/
+
+    private void populateOffers() {
+        List<offers> allOffers = offerService.getAllOffers();
+        VBox offersContainer = new VBox(10);
+        for (offers offer : allOffers) {
+            AnchorPane card = createOfferCard(offer);
+            offersContainer.getChildren().add(card);
+        }
+        offersScrollPane.setContent(offersContainer);
     }
+
+
 
 
     private AnchorPane createOfferCard(offers offer) {
@@ -108,10 +150,12 @@ public class displayofferback implements Initializable {
         descriptionPrefixLabel.setLayoutY(120);
         descriptionPrefixLabel.setStyle(" -fx-text-fill: #892193FF;");
 
+
         Label descriptionLabel = new Label(offer.getDescription());
         descriptionLabel.setLayoutX(420);
         descriptionLabel.setLayoutY(120);
-
+       // descriptionLabel.setMaxWidth(300); // Set the maximum width for wrapping
+        //descriptionLabel.setWrapText(true);
 
 
 

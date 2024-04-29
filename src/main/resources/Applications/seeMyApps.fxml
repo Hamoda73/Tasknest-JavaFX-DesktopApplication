@@ -53,7 +53,7 @@
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
                     <children>
-                        <Label alignment="CENTER" fx:id="home" prefHeight="39.0" prefWidth="62.0" text="Home" textFill="WHITE" onMouseClicked="#navigateAlloffers">
+                        <Label fx:id="home" alignment="CENTER" onMouseClicked="#navigateAlloffers" prefHeight="39.0" prefWidth="62.0" text="Home" textFill="WHITE">
                             <font>
                                 <Font name="Calibri Bold Italic" size="24.0" />
                             </font>
@@ -68,7 +68,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
                     <children>
-                        <Label alignment="CENTER" fx:id="freelancer" prefHeight="39.0" prefWidth="120.0" text="Freelancers" textFill="WHITE">
+                        <Label fx:id="freelancer" alignment="CENTER" prefHeight="39.0" prefWidth="120.0" text="Freelancers" textFill="WHITE">
                             <font>
                                 <Font name="Calibri Bold Italic" size="24.0" />
                             </font>
@@ -77,7 +77,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
                     <children>
-                        <Label alignment="CENTER" fx:id="reclamation" prefHeight="39.0" prefWidth="129.0" text="Reclamation" textFill="WHITE">
+                        <Label fx:id="reclamation" alignment="CENTER" prefHeight="39.0" prefWidth="129.0" text="Reclamation" textFill="WHITE">
                             <font>
                                 <Font name="Calibri Bold Italic" size="24.0" />
                             </font>
@@ -86,7 +86,7 @@
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="64.0" prefWidth="216.0">
                     <children>
-                        <Label alignment="CENTER" fx:id="forum" prefHeight="39.0" prefWidth="78.0" text="Forum" textFill="WHITE">
+                        <Label fx:id="forum" alignment="CENTER" prefHeight="39.0" prefWidth="78.0" text="Forum" textFill="WHITE">
                             <font>
                                 <Font name="Calibri Bold Italic" size="24.0" />
                             </font>
@@ -116,7 +116,7 @@
                                         <Font name="Calibri Bold Italic" size="57.0" />
                                     </font>
                                 </Label>
-                                <Label alignment="CENTER" prefHeight="101.0" prefWidth="883.0" text="List of Applications ">
+                                <Label alignment="CENTER" prefHeight="101.0" prefWidth="883.0" text="Your Applications ">
                                     <font>
                                         <Font name="Calibri Bold Italic" size="37.0" />
                                     </font>
