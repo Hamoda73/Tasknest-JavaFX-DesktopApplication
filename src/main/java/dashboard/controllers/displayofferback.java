@@ -1,8 +1,10 @@
-package tasknest.controllers.offer;
+package dashboard.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,99 +12,64 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import tasknest.controllers.applications.Apply;
 import tasknest.controllers.applications.OfferApps;
 import tasknest.models.offers;
 import tasknest.services.OfferService;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class Displayoffuser  {
+public class displayofferback implements Initializable {
+
 
     @FXML
-    private ScrollPane offersScrollPane;
+    ScrollPane offersScrollPane;
 
     private OfferService offerService;
 
-    // Static user ID variable
-    private  int STATIC_USER_ID = 2;
-
-//for the edit
-
-    private offers offer;
-
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
         populateOffers();
-        System.out.println("helloooooooooooo");
-
-
     }
-//users offers
-   /* private void populateOffers() {
-        // Fetch offers posted by the static user ID
-        List<offers> userOffers = offerService.afficheruseroffers(STATIC_USER_ID);
+
+    private void populateOffers() {
+        List<offers> allOffers = offerService.getAllOffers();
 
         VBox offersContainer = new VBox(10);
 
-        for (offers offer : userOffers) {
+        for (offers offer : allOffers) {
             AnchorPane card = createOfferCard(offer);
             offersContainer.getChildren().add(card);
         }
-       // offersContainer.getChildren().clear();
-        offersScrollPane.setContent(offersContainer);
-    }*/
-
-
-    private void populateOffers() {
-        // Fetch offers posted by the static user ID
-        List<offers> userOffers = offerService.afficheruseroffers(STATIC_USER_ID);
-
-        VBox offersContainer = new VBox(10);
-
-        if (userOffers.isEmpty()) {
-            // Display a message when there are no offers available
-            AnchorPane noOffersPane = new AnchorPane();
-            Label noOffersLabel = new Label("No offers yet");
-            noOffersLabel.getStyleClass().add("no-offers-label");
-            AnchorPane.setTopAnchor(noOffersLabel, 200.0);
-            AnchorPane.setBottomAnchor(noOffersLabel, 200.0);
-            AnchorPane.setLeftAnchor(noOffersLabel, 450.0);
-            AnchorPane.setRightAnchor(noOffersLabel, 300.0);
-            noOffersPane.getChildren().add(noOffersLabel);
-            offersContainer.getChildren().add(noOffersPane);
-        } else {
-            // Populate offers if available
-            for (offers offer : userOffers) {
-                AnchorPane card = createOfferCard(offer);
-                offersContainer.getChildren().add(card);
-            }
-        }
 
         offersScrollPane.setContent(offersContainer);
     }
 
 
-
-
-
-
-
     private AnchorPane createOfferCard(offers offer) {
+
         AnchorPane card = new AnchorPane();
         card.getStyleClass().add("offer-card");
 
-
-
-
         ImageView imageView = new ImageView();
-        String imageUrl = getClass().getResource("/images/taswira.png").toExternalForm(); // Path to your image resource
+        String imageUrl = getClass().getResource("/images/taswira.png").toExternalForm();
         Image image = new Image(imageUrl);
 
         imageView.setImage(image);
         imageView.getStyleClass().add("image-view");
+
+        /*Label nameLabel = new Label("Company  : " + offer.getEntreprise_name());
+        nameLabel.setLayoutX(300);
+        nameLabel.setLayoutY(10);*/
 
         Label namePrefixLabel = new Label("Company: ");
         namePrefixLabel.setLayoutX(300);
@@ -113,6 +80,7 @@ public class Displayoffuser  {
         nameLabel.setLayoutX(420);
         nameLabel.setLayoutY(10);
 
+
         Label DomainPrefixLabel = new Label("Domain: ");
         DomainPrefixLabel.setLayoutX(300);
         DomainPrefixLabel.setLayoutY(50);
@@ -121,6 +89,10 @@ public class Displayoffuser  {
         Label DomainLabel = new Label(offer.getDomain());
         DomainLabel.setLayoutX(420);
         DomainLabel.setLayoutY(50);
+
+
+        //newwwwwwwwwww
+        // Inside your createOfferCard method:
 
         Label postPrefixLabel = new Label("Post: ");
         postPrefixLabel.setLayoutX(300);
@@ -140,6 +112,9 @@ public class Displayoffuser  {
         descriptionLabel.setLayoutX(420);
         descriptionLabel.setLayoutY(120);
 
+
+
+
         Label localisationPrefixLabel = new Label("Location: ");
         localisationPrefixLabel.setLayoutX(300);
         localisationPrefixLabel.setLayoutY(160);
@@ -149,6 +124,12 @@ public class Displayoffuser  {
         localisationLabel.setLayoutX(420);
         localisationLabel.setLayoutY(160);
 
+
+
+
+
+
+
         Label periodPrefixLabel = new Label("Period: ");
         periodPrefixLabel.setLayoutX(300);
         periodPrefixLabel.setLayoutY(200);
@@ -157,21 +138,24 @@ public class Displayoffuser  {
         Label periodValueLabel = new Label(offer.getPeriod());
         periodValueLabel.setLayoutX(420);
         periodValueLabel.setLayoutY(200);
+// Add both labels to your layout
 
         Label salaryPrefixLabel = new Label("Salary: ");
         salaryPrefixLabel.setLayoutX(300);
         salaryPrefixLabel.setLayoutY(240);
         salaryPrefixLabel.setStyle("-fx-text-fill: #892193FF;");
 
+// Convert float salary to string
         String salaryText = String.valueOf(offer.getSalary());
         Label salaryLabel = new Label(salaryText);
         salaryLabel.setLayoutX(420);
         salaryLabel.setLayoutY(240);
 
-        //card.setUserData(offer.getId());
+
+
 
         Button appsButton = new Button("See Applications");
-        appsButton.setLayoutX(1000);
+        appsButton.setLayoutX(600);
         appsButton.setLayoutY(280);
         appsButton.getStyleClass().add("apply-button");
         appsButton.setOnAction(event->  {
@@ -181,39 +165,29 @@ public class Displayoffuser  {
 
 
 
-
-
         Button deleteButton = new Button("Delete");
-        deleteButton.setLayoutX(890);
+        deleteButton.setLayoutX(460);
         deleteButton.setLayoutY(280);
-        deleteButton.getStyleClass().add("delete-button");
+      deleteButton.getStyleClass().add("delete-button");
         deleteButton.setOnAction(event->  {
 
             offerService.supprimer(offer);
 
-            initialize();
+            initialize( null, null);
         });
 
 
 
-        Button editButton = new Button("Edit");
-        editButton.setLayoutX(780);
-        editButton.setLayoutY(280);
-        editButton.getStyleClass().add("edit-button");
-        editButton.setOnAction(event -> {
-           handleEditButton(offer); // Pass offer data to the handler method
-        });
-
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/job-seeking.gif"));
+        Image gifImage = new Image(getClass().getResourceAsStream("/images/letter.gif"));
         ImageView gifImageView = new ImageView(gifImage);
 
 
         Platform.runLater(() -> {
             gifImageView.setLayoutX(card.getWidth() - gifImage.getWidth());
-            gifImageView.setLayoutY(15);
-            gifImageView.setLayoutX(1000);
-            gifImageView.setFitWidth(200);
-            gifImageView.setFitHeight(200);
+            gifImageView.setLayoutY(5);
+            gifImageView.setLayoutX(700);
+            gifImageView.setFitWidth(70);
+            gifImageView.setFitHeight(70);
 
 
 
@@ -221,19 +195,24 @@ public class Displayoffuser  {
 
 
 
-        card.getChildren().addAll(imageView, namePrefixLabel, nameLabel, DomainPrefixLabel, DomainLabel,
-                postPrefixLabel, postLabel, descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,
-                localisationLabel, periodPrefixLabel, periodValueLabel, salaryPrefixLabel, salaryLabel, appsButton,deleteButton,editButton,gifImageView);
+
+
+        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, appsButton,gifImageView,deleteButton);
 
         return card;
     }
 
-    private void afficherApps(offers offer) {
 
+
+
+   /* private void afficherApps(offers offer) {
+        System.out.println("heyyy= "+ offer);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/OfferApps.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/OfferAppsback.fxml"));
             Parent root = loader.load();
             OfferApps controller = loader.getController();
+
             System.out.println("heyyy= "+ offer);
             controller.setappsOFF(offer);
             offersScrollPane.getScene().setRoot(root);
@@ -241,7 +220,40 @@ public class Displayoffuser  {
             throw new RuntimeException(e);
         }
     }
+*/
 
+
+    private void afficherApps(offers offer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/offerAppsback.fxml"));
+            Parent root = loader.load();
+            displayappsback applyController = loader.getController();
+           applyController.setappsOFF(offer);
+            System.out.println("huuuu= "+offer);
+            offersScrollPane.getScene().setRoot(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void redirectToApply(MouseEvent event, int offerId) {
+        try {
+
+            Window window = ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/Apply.fxml"));
+            Parent root = loader.load();
+
+            // Pass the user and offer IDs to the Apply controller
+            Apply applyController = loader.getController();
+            applyController.setUserAndOfferIds(offerId);
+
+            // Show the Apply view
+            Stage stage = (Stage) window;
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void navigateToAddOffer() {
@@ -254,64 +266,17 @@ public class Displayoffuser  {
         }
     }
 
+
     @FXML
-    private void navigateToDisplayAllOffers() {
+    private void navigateToDisplayuseroff() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/DisplayAllOffers.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/Displayoffuser.fxml"));
             Parent root = loader.load();
             offersScrollPane.getScene().setRoot(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-   /* private void handleEditButton(offers offer) {
-        // Navigate to the EditOfferController
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/editOffer.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-
-            editOffer controller = loader.getController();
-            controller.setEditedOffer(offer); // Pass the offer to the EditOfferController
-            controller.setOfferService(offerService); // Initialize OfferService in the controller
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
-
-    private void handleEditButton(offers offer) {
-        // Navigate to the EditOfferController
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/editOffer.fxml"));
-        Parent root;
-        try {
-            root = loader.load();
-
-            // Retrieve the controller instance
-            editOffer controller = loader.getController();
-
-            // Pass the offer and offerService to the EditOffer Controller
-            controller.setEditedOffer(offer);
-            controller.setOfferService(offerService);
-
-            // Get the current scene
-            Scene scene = offersScrollPane.getScene();
-            scene.setRoot(root);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-
-
 
 
 }

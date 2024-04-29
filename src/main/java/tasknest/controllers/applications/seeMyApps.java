@@ -49,21 +49,7 @@ public class seeMyApps {
 
     }
 
-    /*private void populateApps() {
 
-        List<Application> userApps = applicationService.getApplicationsByUserId(useridapp);
-        System.out.println("userApps= "+userApps);
-        VBox AppsContainer = new VBox(10);
-
-        for (Application app : userApps) {
-            AnchorPane card = createUserAppsCard(app);
-            System.out.println("app= "+app);
-            AppsContainer.getChildren().add(card);
-        }
-        // offersContainer.getChildren().clear();
-
-        MyappsScrollPane.setContent(AppsContainer);
-    }*/
     private void populateApps() {
         List<Application> userApps = applicationService.getApplicationsByUserId(useridapp);
         System.out.println("userApps= " + userApps);
@@ -98,7 +84,7 @@ public class seeMyApps {
         card.getStyleClass().add("offerapp-card");
 
         ImageView imageView = new ImageView();
-        String imageUrl = getClass().getResource("/images/appss.png").toExternalForm(); // Path to your image resource
+        String imageUrl = getClass().getResource("/images/appss.png").toExternalForm();
         Image image = new Image(imageUrl);
 
         imageView.setImage(image);

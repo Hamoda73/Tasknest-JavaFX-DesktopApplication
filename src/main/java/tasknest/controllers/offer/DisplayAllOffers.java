@@ -22,15 +22,11 @@ import tasknest.controllers.applications.Apply;
 import tasknest.models.offers;
 import tasknest.services.OfferService;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-import javafx.scene.paint.Color;
 public class DisplayAllOffers implements Initializable {
 
     @FXML
@@ -63,7 +59,7 @@ public class DisplayAllOffers implements Initializable {
         card.getStyleClass().add("offer-card");
 
         ImageView imageView = new ImageView();
-        String imageUrl = getClass().getResource("/taswira.png").toExternalForm();
+        String imageUrl = getClass().getResource("/images/taswira.png").toExternalForm();
         Image image = new Image(imageUrl);
 
         imageView.setImage(image);

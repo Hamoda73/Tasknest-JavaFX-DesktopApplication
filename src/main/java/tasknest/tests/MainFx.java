@@ -10,9 +10,11 @@ public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/offer/DisplayAlloffers.fxml"));
+       // Parent root = FXMLLoader.load(getClass().getResource("/offer/displayofferback.fxml"));
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("display offer  Offer");
+        primaryStage.setTitle("TaskNest");
         primaryStage.show();
         primaryStage.setMaximized(true);
     }

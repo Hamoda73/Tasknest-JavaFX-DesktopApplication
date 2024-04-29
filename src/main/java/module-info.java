@@ -14,5 +14,6 @@ module Test{
     opens tasknest.controllers.offer;
     exports tasknest.controllers.applications;
     opens tasknest.controllers.applications to javafx.fxml;
+    opens dashboard.controllers;
 
 }
