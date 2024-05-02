@@ -1,5 +1,6 @@
 package tasknest.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -11,6 +12,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.w3c.dom.Text;
 import tasknest.models.users;
 import tasknest.services.UserService;
 import tasknest.utils.DataSource;
@@ -46,7 +48,7 @@ public class DisplayUsers {
 
         @Override
         public void supprimer(users user) {
-            Connection connection = null;
+            Connection connection;
             PreparedStatement preparedStatement = null;
 
             try {
@@ -114,8 +116,32 @@ public class DisplayUsers {
             return userList;
         }
 
+        @Override
+        public void handleBlockUser(users user) {
+            Connection connection;
+            PreparedStatement preparedStatement = null;
 
-    }; // UserService instance
+            try {
+                // Establish connection
+                connection = DataSource.getInstance().getConnection();
+
+                // SQL query to delete user
+                String query = "UPDATE user SET blocked =? WHERE id = ?";
+                preparedStatement = connection.prepareStatement(query);
+                user.setBlocked(!user.isBlocked());
+                preparedStatement.setInt(1, user.isBlocked() ? 1 : 0);
+                preparedStatement.setInt(2, user.getId());
+
+                // Execute query
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    };
 
     // Method to initialize the controller
     @FXML
@@ -221,6 +247,12 @@ public class DisplayUsers {
                 populateUserLabels(userService.afficher());
             });
         }
+        if (text.equals("BLOCK")) {
+            button.setOnAction(event -> {
+                userService.handleBlockUser(user);
+                populateUserLabels(userService.afficher());
+            });
+        }
         // Implement action event for other buttons (e.g., block user)
         // else if (text.equals("BLOCK")) {
         //     button.setOnAction(event -> handleBlockAction(user));
@@ -258,10 +290,4 @@ public class DisplayUsers {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    void handleBlockUser(MouseEvent event) {
-
-    }
-
 }

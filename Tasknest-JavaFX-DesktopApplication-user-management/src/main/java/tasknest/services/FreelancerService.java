@@ -28,5 +28,10 @@ public final class FreelancerService extends UserService {
         return null;
     }
 
+    @Override
+    public void handleBlockUser(users user) {
+
+    }
+
 
 }

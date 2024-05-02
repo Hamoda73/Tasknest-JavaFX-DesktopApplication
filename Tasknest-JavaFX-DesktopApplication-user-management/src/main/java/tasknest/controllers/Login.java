@@ -57,9 +57,14 @@ public class Login {
         users loggedInUser = AdminService.getInstance().isValidUser(email, password);
 
         if (loggedInUser != null) {
-            MainFx.getInstance().login(loggedInUser);
-            System.out.println("Login successful");
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
+            if(!loggedInUser.isBlocked()) {
+                MainFx.getInstance().login(loggedInUser);
+                System.out.println("Login successful");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Login successful!");
+            }
+            else {
+                showAlert(Alert.AlertType.ERROR, "Error", "Your account is blocked!");
+            }
         } else {
             showAlert(Alert.AlertType.ERROR, "Error", "Invalid email or password.");
         }
@@ -137,16 +142,6 @@ public class Login {
     @FXML
     void navigateToForgetPasswordFirst(MouseEvent event) {
         MainFx.getInstance().loadForgotPasswordFirst();
-    }
-
-    private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
-        try {
-            if (resultSet != null) resultSet.close();
-            if (preparedStatement != null) preparedStatement.close();
-            if (connection != null) connection.close(); // Close the connection here
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

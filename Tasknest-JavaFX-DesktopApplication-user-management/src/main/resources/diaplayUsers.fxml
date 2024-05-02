@@ -238,7 +238,7 @@
                                                       <Insets right="5.0" top="10.0" />
                                                    </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="BlockBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#handleBlockUser" prefHeight="26.0" prefWidth="75.0" text="BLOCK">
+                                                <Button fx:id="BlockBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="75.0" text="BLOCK">
                                                    <HBox.margin>
                                                       <Insets top="10.0" />
                                                    </HBox.margin>

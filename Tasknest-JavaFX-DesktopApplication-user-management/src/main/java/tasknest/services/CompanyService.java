@@ -108,6 +108,11 @@ public final class CompanyService extends UserService{
         return null;
     }
 
+    @Override
+    public void handleBlockUser(users user) {
+
+    }
+
     public void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

@@ -23,4 +23,5 @@ public abstract class UserService implements IService<users>{
     @Override
     public abstract List<users> afficher();
 
+    public abstract void handleBlockUser(users user);
 }
