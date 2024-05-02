@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import tasknest.models.userInfo;
 import tasknest.models.users;
 
 import java.io.IOException;
@@ -84,9 +83,39 @@ public class MainFx extends Application {
         loadLogin();
     }
 
-    private void loadLogin() {
+    public void loadLogin() {
         loadScene(
                 "/login.fxml",
+                "Connexion",
+                1100,
+                700,
+                true
+        );
+    }
+
+    public void loadForgotPasswordFirst() {
+        loadScene(
+                "/forgotPasswordFirst.fxml",
+                "Connexion",
+                1100,
+                700,
+                true
+        );
+    }
+
+    public void loadForgotPasswordSecond() {
+        loadScene(
+                "/forgotPasswordSecond.fxml",
+                "Connexion",
+                1100,
+                700,
+                true
+        );
+    }
+
+    public void loadForgotPasswordThird() {
+        loadScene(
+                "/forgotPasswordThird.fxml",
                 "Connexion",
                 1100,
                 700,

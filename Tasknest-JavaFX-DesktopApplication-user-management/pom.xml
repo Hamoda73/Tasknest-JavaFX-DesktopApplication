@@ -45,7 +45,11 @@
             <artifactId>spring-security-core</artifactId>
             <version>5.5.0</version> <!-- Or the version you're using -->
         </dependency>
-
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
 
     </dependencies>
 

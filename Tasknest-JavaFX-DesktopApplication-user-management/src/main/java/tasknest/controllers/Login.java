@@ -52,9 +52,9 @@ public class Login {
     private void handleLogin() {
         String email = emailField.getText();
         String password = passwordField.getText();
-        String encodedPassword = passwordEncoder.encode(password);
 
-        users loggedInUser = AdminService.getInstance().isValidUser(email, encodedPassword);
+
+        users loggedInUser = AdminService.getInstance().isValidUser(email, password);
 
         if (loggedInUser != null) {
             MainFx.getInstance().login(loggedInUser);
@@ -67,7 +67,7 @@ public class Login {
 
     private users isValidUser(String email, String password) {
         // Initialize database resources
-        Connection connection = null;
+        Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         users user = null;
@@ -132,6 +132,11 @@ public class Login {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void navigateToForgetPasswordFirst(MouseEvent event) {
+        MainFx.getInstance().loadForgotPasswordFirst();
     }
 
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
