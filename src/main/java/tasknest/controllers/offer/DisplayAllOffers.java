@@ -1,9 +1,12 @@
 package tasknest.controllers.offer;
 
+import javafx.scene.paint.Color;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,20 +14,30 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 //import org.w3c.dom.events.MouseEvent;
 import tasknest.controllers.applications.Apply;
+import tasknest.models.Application;
 import tasknest.models.offers;
 import tasknest.services.OfferService;
+import javafx.scene.control.ChoiceBox;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
@@ -38,16 +51,23 @@ public class DisplayAllOffers implements Initializable {
     private TextField searchField;
     private OfferService offerService;
 
+    private FilteredList<offers> filteredOffersList;
+    private SortedList<offers> sortedOffersList;
+    private Comparator<offers> currentComparator;
+
+
     @FXML
     private Pagination pagination;
 
+    @FXML
+    private ChoiceBox<String> sortingChoiceBox;
     private static final int ITEMS_PER_PAGE = 3;
 
     @FXML
     private VBox cardsContainer;
 
 
-    @Override
+    /*@Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
 
@@ -58,15 +78,42 @@ public class DisplayAllOffers implements Initializable {
 
         populateOffers();
         setupPagination();
+    }*/
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        offerService = new OfferService();
+
+        allOffersList.addAll(offerService.getAllOffers());
+
+        filteredOffersList = new FilteredList<>(allOffersList);
+        sortedOffersList = new SortedList<>(filteredOffersList);
+        currentComparator = Comparator.comparingDouble(offers::getSalary).reversed(); // Initial sorting by salary
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterOffers(newValue);
+        });
+
+        sortedOffersList.comparatorProperty().addListener((observable, oldValue, newValue) -> {
+            populateOffers();
+        });
+
+        setupPagination();
     }
-    private void setupPagination() {
+   /* private void setupPagination() {
         int pageCount = (int) Math.ceil((double) allOffersList.size() / ITEMS_PER_PAGE);
         pagination = new Pagination(pageCount, 0);
         pagination.setPageFactory(this::createPage);
         offersScrollPane.setContent(pagination);
-    }
+    }*/
+   private void setupPagination() {
+       int pageCount = (int) Math.ceil((double) filteredOffersList.size() / ITEMS_PER_PAGE);
+       pagination = new Pagination(pageCount, 0);
+       pagination.setPageFactory(this::createPage);
+       offersScrollPane.setContent(pagination);
+   }
 
-    private Node createPage(int pageIndex) {
+
+    /*  private Node createPage(int pageIndex) {
         int fromIndex = pageIndex * ITEMS_PER_PAGE;
         int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, allOffersList.size());
         List<offers> currentPageOffers = allOffersList.subList(fromIndex, toIndex);
@@ -78,7 +125,19 @@ public class DisplayAllOffers implements Initializable {
         }
         return pageContent;
     }
+*/
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ITEMS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ITEMS_PER_PAGE, filteredOffersList.size());
+        List<offers> currentPageOffers = filteredOffersList.subList(fromIndex, toIndex);
 
+        VBox pageContent = new VBox(10);
+        for (offers offer : currentPageOffers) {
+            AnchorPane card = createOfferCard(offer);
+            pageContent.getChildren().add(card);
+        }
+        return pageContent;
+    }
 
 
   /*  private void filterOffers(String query) {
@@ -106,43 +165,46 @@ public class DisplayAllOffers implements Initializable {
 
 
 
-  private void filterOffers(String query) {
-    Predicate<offers> containsQuery = offer ->
-            offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
-            offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
-            offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
-            offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
-            offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
-            offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
-            String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
+    private void filterOffers(String query) {
+        Predicate<offers> containsQuery = offer ->
+                offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
+                        String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
 
-    FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
-
-    VBox offersContainer = new VBox(10);
-
-    for (offers offer : filteredList) {
-        AnchorPane card = createOfferCard(offer);
-        offersContainer.getChildren().add(card);
-    }
-
-    offersScrollPane.setContent(offersContainer);
-}
-
-
-
-
-    private void populateOffers() {
-        List<offers> allOffers = offerService.getAllOffers();
+        FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
 
         VBox offersContainer = new VBox(10);
 
-        for (offers offer : allOffers) {
+        for (offers offer : filteredList) {
             AnchorPane card = createOfferCard(offer);
             offersContainer.getChildren().add(card);
         }
 
         offersScrollPane.setContent(offersContainer);
     }
+
+
+
+
+
+
+  private void populateOffers() {
+      sortedOffersList.setComparator(currentComparator);
+
+      VBox offersContainer = new VBox(10);
+
+      for (offers offer : sortedOffersList) {
+          AnchorPane card = createOfferCard(offer);
+          offersContainer.getChildren().add(card);
+      }
+
+      offersScrollPane.setContent(offersContainer);
+  }
+
 
 
     private AnchorPane createOfferCard(offers offer) {
@@ -202,7 +264,7 @@ public class DisplayAllOffers implements Initializable {
         Label descriptionLabel = new Label(offer.getDescription());
         descriptionLabel.setLayoutX(420);
         descriptionLabel.setLayoutY(120);
-      //  descriptionLabel.setMaxWidth(300); // Set the maximum width for wrapping
+        //  descriptionLabel.setMaxWidth(300); // Set the maximum width for wrapping
         //descriptionLabel.setWrapText(true);
 
 
@@ -276,26 +338,33 @@ public class DisplayAllOffers implements Initializable {
 */
 
 
-       /* applyButton.setOnAction(event -> {
-            try {
-                Window window = ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Applications/Apply.fxml"));
-                Parent root = loader.load();
 
-                Apply applyController = loader.getController();
-                //applyController.setUserAndOfferIds(offer.getUserId(), offer.getId());
+        List<Application> applications = offerService.getApplicationsForOffer(offer.getId());
 
-                // Get the scene from the button's stage
-                Scene scene = applyButton.getScene();
+        // Calculate the number of applications
+        int numApplications = applications.size();
 
-                // Replace the scene content with the new FXML content
-                scene.setRoot(root);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        // Create a circle to display the number of applications
+        Circle circle = new Circle(15);
 
-        */
+        circle.setStrokeWidth(2);
+
+        // Create a label to display the number of applications
+        Label numAppsLabel = new Label(String.valueOf(numApplications));
+
+
+
+
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(circle, numAppsLabel);
+        stackPane.setLayoutX(1150);
+        stackPane.setLayoutY(10);
+        circle.setFill(Color.YELLOW);
+        circle.setStrokeWidth(2);
+
+        // Add the stack pane to the card
+        card.getChildren().add(stackPane);
+
 
         card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, applyButton/*,gifImageView*/);
 
@@ -368,4 +437,58 @@ public class DisplayAllOffers implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    private void sortBySalary() {
+        currentComparator = Comparator.comparingDouble(offers::getSalary).reversed();
+        sortedOffersList.setComparator(currentComparator);
+    }
+
+    private void sortByEntrepriseName() {
+        currentComparator = Comparator.comparing(offers::getEntreprise_name);
+        sortedOffersList.setComparator(currentComparator);
+    }
+
+
+
+  /*  @FXML
+    private void handleSortingSelection(ActionEvent event) {
+        String selectedSort = sortingChoiceBox.getValue();
+        if (selectedSort != null) {
+            if (selectedSort.equals("salary")) {
+                // Sort by salary
+                sortBySalary();
+            } else if (selectedSort.equals("entreprise")) {
+                // Sort by entreprise name
+                sortByEntrepriseName();
+            }
+        }
+    }*/
+
+    @FXML
+    private void handleSortingSelection(ActionEvent event) {
+        String selectedSort = sortingChoiceBox.getValue();
+        if (selectedSort != null) {
+            if (selectedSort.equals("salary")) {
+
+                sortBySalary();
+            } else if (selectedSort.equals("entreprise")) {
+
+                sortByEntrepriseName();
+            } else if (selectedSort.equals("applications")) {
+
+                sortByNumApplications();
+            }
+        }
+    }
+
+    private void sortByNumApplications() {
+        currentComparator = Comparator.comparingInt(offer -> offerService.getApplicationsForOffer(offer.getId()).size());
+        sortedOffersList.setComparator(currentComparator);
+    }
+
+    private int getNumApplications(offers offer) {
+        return offerService.getApplicationsForOffer(offer.getId()).size();
+    }
+
+
 }

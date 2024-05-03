@@ -5,6 +5,7 @@ module Test{
     requires java.sql;
    // requires org.apache.pdfbox;
     requires java.desktop;
+    requires twilio;
 
     // requires javafx.web;
     // opens tasknest.controllers;

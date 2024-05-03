@@ -1,16 +1,16 @@
 package dashboard.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,10 +27,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class displayofferback implements Initializable {
 
-
+    private ObservableList<offers> allOffersList = FXCollections.observableArrayList();
     @FXML
     ScrollPane offersScrollPane;
 
@@ -38,13 +39,19 @@ public class displayofferback implements Initializable {
     @FXML
    // private Pagination pagination;
     private static final int ITEMS_PER_PAGE = 3;
-
+    @FXML
+    private TextField searchField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
-        populateOffers();
-        //setupPagination();
+        allOffersList.addAll(offerService.getAllOffers());
+        populateOffers(allOffersList);
+
+        // Listen for changes in the search field and filter offers accordingly
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterOffers(newValue);
+        });
     }
 
     /*private void setupPagination() {
@@ -84,7 +91,7 @@ public class displayofferback implements Initializable {
         offersScrollPane.setContent(offersContainer);
     }*/
 
-    private void populateOffers() {
+   /* private void populateOffers() {
         List<offers> allOffers = offerService.getAllOffers();
         VBox offersContainer = new VBox(10);
         for (offers offer : allOffers) {
@@ -92,8 +99,16 @@ public class displayofferback implements Initializable {
             offersContainer.getChildren().add(card);
         }
         offersScrollPane.setContent(offersContainer);
-    }
+    }*/
 
+    private void populateOffers(List<offers> offersList) {
+        VBox offersContainer = new VBox(10);
+        for (offers offer : offersList) {
+            AnchorPane card = createOfferCard(offer);
+            offersContainer.getChildren().add(card);
+        }
+        offersScrollPane.setContent(offersContainer);
+    }
 
 
 
@@ -222,7 +237,7 @@ public class displayofferback implements Initializable {
 
 
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/letter.gif"));
+        /*Image gifImage = new Image(getClass().getResourceAsStream("/images/letter.gif"));
         ImageView gifImageView = new ImageView(gifImage);
 
 
@@ -235,17 +250,35 @@ public class displayofferback implements Initializable {
 
 
 
-        });
+        });*/
 
 
 
 
 
-        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, appsButton,gifImageView,deleteButton);
+        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, appsButton/*,gifImageView*/,deleteButton);
 
         return card;
     }
 
+
+    private void filterOffers(String query) {
+        // Create a predicate to filter offers based on the search query
+        Predicate<offers> containsQuery = offer ->
+                offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
+                        String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
+
+        // Filter the offers list based on the predicate
+        FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
+
+        // Update the display with the filtered offers
+        populateOffers(filteredList);
+    }
 
 
 
