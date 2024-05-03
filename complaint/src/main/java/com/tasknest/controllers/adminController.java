@@ -17,6 +17,9 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+
+import javax.mail.MessagingException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class adminController {
@@ -107,7 +110,7 @@ public class adminController {
 
 
     @FXML
-    void respondfunc(MouseEvent event) {
+    void respondfunc(MouseEvent event) throws MessagingException {
         String text = adminresponse.getText();
 
         // Check if response is empty or too short (less than 5 characters, for example)
@@ -128,6 +131,7 @@ public class adminController {
             int complaintId = selectedComplaint.getId(); // Assuming getId() returns the complaint ID
             respond com = new respond(complaintId, text);
             respondService.ajouter(com);
+            respondService.sendEmail("md.khelifi@hotmail.com","About your complaint",text);
             System.out.println("Response added successfully!");
             // You may want to update the UI or provide feedback to the user here
         } else {
@@ -155,8 +159,16 @@ public class adminController {
             // Update the response message of the selected complaint
             selectedComplaint.setResponseMessage(updatedMessage);
 
-            // Call the modifier method in the ComplaintService to update the response in the database
-            database.modifier(selectedComplaint);
+            // Update the response object associated with the complaint
+            if (selectedComplaint.getResponse() != null) {
+                selectedComplaint.getResponse().setMessage(updatedMessage);
+            } else {
+                // If there is no existing response object, create a new one
+                selectedComplaint.setResponse(new respond(selectedComplaint.getId(), updatedMessage));
+            }
+
+            // Call the modifier method in the RespondService to update the response in the database
+            respondService.modifier(selectedComplaint.getResponse());
 
             // Optionally, update the UI to reflect the changes
             adminmessage.getChildren().clear(); // Clear previous message
@@ -173,12 +185,6 @@ public class adminController {
             System.out.println("No complaint selected.");
         }
     }
-
-
-
-
-
-
 
 
 

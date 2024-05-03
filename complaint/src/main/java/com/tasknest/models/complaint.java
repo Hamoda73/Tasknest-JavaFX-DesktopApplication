@@ -1,32 +1,40 @@
 package com.tasknest.models;
-
 import java.util.Objects;
 import java.lang.*;
 
-import java.util.List;
 public class complaint {
 
     private int id;
     private String type;
     private String message;
-
     private respond response;
+    private String responseMessage;
+
     public complaint(int id, String type, String message) {
         this.id = id;
+        this.type = type;
+        this.message = message;
+        //this.response = new respond(); // Initialize the response object
+    }
+
+    public complaint(String type, String message) {
         this.type = type;
         this.message = message;
     }
 
     public complaint() {
+    }
 
+    public void setResponse(respond response) {
+        this.response = response;
+        if (response != null) {
+            this.responseMessage = response.getMessage();
+        }
     }
 
     public respond getResponse() {
         return response;
     }
-
-    private String responseMessage;
-
 
     public String getResponseMessage() {
         return responseMessage;
@@ -36,53 +44,12 @@ public class complaint {
         this.responseMessage = responseMessage;
     }
 
-
-    public void setResponse(respond response) {
-        this.response = response;
-        if (response != null) {
-            this.responseMessage = response.getMessage();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "complaint{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", message='" + message + '\'' +
-                '}';
-    }
-
-
-
-    public complaint(String type, String message) {
-        this.type = type;
-        this.message = message;
-    }
-
-    public complaint(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        complaint complaint = (complaint) o;
-        return id == complaint.id && Objects.equals(type, complaint.type) && Objects.equals(message, complaint.message);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, type, message);
     }
 
     public String getType() {
@@ -101,5 +68,25 @@ public class complaint {
         this.message = message;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        complaint complaint = (complaint) o;
+        return id == complaint.id && Objects.equals(type, complaint.type) && Objects.equals(message, complaint.message);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, type, message);
+    }
+
+    @Override
+    public String toString() {
+        return "complaint{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

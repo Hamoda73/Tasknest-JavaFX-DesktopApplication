@@ -7,6 +7,10 @@ import com.tasknest.utils.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 public class RespondService implements IService<respond>{
 
@@ -35,18 +39,30 @@ public class RespondService implements IService<respond>{
             System.out.println(e.getMessage());
         }
     }
-
     @Override
     public void modifier(respond respond) {
-        String req = "UPDATE `respond` SET `complaint_id` = '" + respond.getComplaint_id() + "', `message` = '" + respond.getMessage() + "' WHERE `respond`.`id` = " + respond.getId() + ";";
+        if (respond == null) {
+            System.out.println("Error: respond object is null.");
+            return;
+        }
+
+        String req = "UPDATE `respond` SET `message` = ? WHERE `id` = ?";
+
         try {
-            Statement st = connection.createStatement();
-            st.executeUpdate(req);
-            System.out.println("Reponse modifiée avec succes !");
+            PreparedStatement pst = connection.prepareStatement(req);
+            pst.setString(1, respond.getMessage());
+            pst.setInt(2, respond.getId());
+            pst.executeUpdate();
+            System.out.println("Response updated successfully!");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error updating response: " + e.getMessage());
         }
     }
+
+
+
+
+
 
     @Override
     public List<respond> afficher() {
@@ -94,6 +110,48 @@ public class RespondService implements IService<respond>{
             }
             return complaints;
         }
+
+
+    public void sendEmail(String to, String subject, String body) {
+        // Set mail server properties
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587"); // Use port 587 for TLS
+        properties.put("mail.smtp.auth", "true"); // Enable authentication
+        properties.put("mail.smtp.starttls.enable", "true"); // Enable TLS
+
+        // Authenticate sender
+        Authenticator authenticator = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("mohamedprojectqt@gmail.com", "fszdoigigmyjamjn");
+            }
+        };
+
+        // Create session
+        Session session = Session.getInstance(properties, authenticator);
+
+        try {
+            // Create email message
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("mohamedprojectqt@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(body);
+
+            // Send email
+            Transport.send(message);
+
+            System.out.println("Email sent successfully!");
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email. Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
 }
