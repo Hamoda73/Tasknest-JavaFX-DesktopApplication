@@ -1,5 +1,5 @@
-/*package tasknest.controllers.applications;
-
+package tasknest.controllers.applications;
+/*
 
 
 
@@ -53,7 +53,7 @@ import javafx.stage.Stage;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
-
+*/
 public class OfferApps {
 
    // private static final String ACCOUNT_SID = "ACad974bc2502471805035089fb98d9640";
@@ -61,7 +61,7 @@ public class OfferApps {
     //private static final String TWILIO_PHONE_NUMBER = "+19413402531";
 
 
-
+/*
 
     private Application selectedApp;
     private offers off = new offers();
@@ -349,10 +349,10 @@ public class OfferApps {
     }
 
 
-
+*/
 
 }
 
 
-*/
+
 
