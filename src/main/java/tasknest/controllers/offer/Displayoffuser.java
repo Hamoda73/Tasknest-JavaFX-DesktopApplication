@@ -34,7 +34,7 @@ public class Displayoffuser  {
     private OfferService offerService;
 
     // Static user
-    private  int STATIC_USER_ID = 35;
+    private  int STATIC_USER_ID = 2;
 
 
 

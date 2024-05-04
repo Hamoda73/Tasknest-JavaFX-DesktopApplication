@@ -46,7 +46,7 @@ public class Apply{
     private int offer_Id;
     @FXML
     private ImageView cvImageView;
-    private int user_Id=32;           //freelancer same in offerApps**********************
+    private int user_Id=25;           //freelancer same in offerApps**********************
     public void setUserAndOfferIds( int offerId) {
 
          offer_Id = offerId;

@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.chart.PieChart?>
 <AnchorPane prefHeight="785.0" prefWidth="1900.0" style="-fx-background-color: EA8D22FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dashboard.controllers.displayofferback">
     <stylesheets>
         <URL value="@card.css" />
@@ -108,7 +106,7 @@
         </VBox>
         <VBox layoutX="216.0" layoutY="7.0" prefHeight="769.0" prefWidth="1284.0" style="-fx-background-color: white; -fx-background-radius: 25;">
             <children>
-                <HBox prefHeight="169.0" prefWidth="1263.0" style="-fx-background-color: #33208FFF; -fx-background-radius: 25;">
+                <HBox prefHeight="169.0" prefWidth="1098.0" style="-fx-background-color: #33208FFF; -fx-background-radius: 25;">
                     <VBox.margin>
                         <Insets left="10.0" right="10.0" top="30.0" />
                     </VBox.margin>
@@ -118,7 +116,7 @@
                                 <Image url="@../images/password.png" />
                             </image>
                         </ImageView>
-                        <VBox prefHeight="204.0" prefWidth="876.0">
+                        <VBox prefHeight="175.0" prefWidth="876.0">
                             <children>
                                 <Label alignment="CENTER" prefHeight="103.0" prefWidth="876.0" text="Dashboard" textFill="WHITE">
                                     <font>
@@ -131,11 +129,6 @@
                                     </font>
                                 </Label>
                             </children>
-                            <TextField fx:id="searchField" prefHeight="43.0" prefWidth="664.0" promptText="Search Here..." style="-fx-background-radius: 24; ; -fx-background-size: cover; -fx-background-position: center;">
-                                <VBox.margin>
-                                    <Insets bottom="10.0" left="90.0" right="100.0" top="10.0" />
-                                </VBox.margin>
-                            </TextField>
                         </VBox>
                     </children>
                 </HBox>
@@ -149,7 +142,6 @@
                     </children>
                 </HBox>
             </children>
-            <PieChart fx:id="domainPieChart" />
         </VBox>
     </children>
 </AnchorPane>

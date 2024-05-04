@@ -1,7 +1,5 @@
 package tasknest.models;
 
-import tasknest.services.UserService;
-
 public class offers {
 
     private int id;
@@ -20,8 +18,6 @@ public class offers {
     private float salary;
 
     private int user_id;
-
-    UserService userservice = new UserService();
 
     public offers(int id, String entreprise_name, String domain, String post, String description, String localisation, String period, float salary, int user_id) {
         if (id <= 0 || entreprise_name == null || entreprise_name.isEmpty() || domain == null || domain.isEmpty() ||
@@ -138,10 +134,6 @@ public class offers {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
-    }
-    public users getUserbyidd(int user_id) {
-
-        return userservice.getUserById(user_id);
     }
 
     @Override
