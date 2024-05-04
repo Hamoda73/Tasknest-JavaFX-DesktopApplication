@@ -1,5 +1,12 @@
 package tasknest.controllers.applications;
 
+
+
+
+
+import javax.mail.internet.MimeMessage;
+import com.twilio.exception.ApiException;
+import com.twilio.rest.proxy.v1.service.Session;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,15 +29,19 @@ import tasknest.services.ApplicationService;
 import tasknest.services.OfferService;
 
 import java.io.File;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 
-
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -39,48 +50,48 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
 import javafx.stage.Stage;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 public class OfferApps {
 
+   private static final String ACCOUNT_SID = "ACad974bc2502471805035089fb98d9640";
+    private static final String AUTH_TOKEN = "645cb256260e1df1aad66f4ce460f8c4";
+    private static final String TWILIO_PHONE_NUMBER = "+19413402531";
+
+
+
+
+    private Application selectedApp;
     private offers off = new offers();
     OfferService offerService = new OfferService();
     ApplicationService applicationService = new ApplicationService();
     private Application App;
-    int user_id=25; //freelancer eli aaml apply lekher nafsou fl apply ctrl l old apps mytfskhouch
+    int user_id=32; //freelancer eli aaml apply lekher nafsou fl apply ctrl l old apps mytfskhouch
 
     @FXML
     private ScrollPane appssScrollPane;
-    public void setappsOFF(offers offer) {
-     off.setId(offer.getId());
 
+   public void setappsOFF(offers offer) {
+       off.setId(offer.getId());
+       off.setEntreprise_name(offer.getEntreprise_name());
 
-        System.out.println("off idd= " +off.getId());
-        System.out.println("off user idd= " +user_id);
-        initialize();
-    }
+       System.out.println("off idd= " + off.getId());
+       System.out.println("off user idd= " + user_id);
+       initialize();
+   }
+
 
     public void initialize()  {
         ApplicationService appS= new ApplicationService();
         populateApps();
         System.out.println("helloooooooooooo");
+       Twilio.init(ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER);
+
     }
 
-    /*public void populateApps() {
-        System.out.println("off.getId(): "+off.getId());
-        // Fetch offers posted by the static user ID
-        List<Application> Offerapps = offerService.getApplicationsForOffer(off.getId());
-        System.out.println("offerapps= "+ Offerapps );
-        VBox offerAppsContainer = new VBox(10);
 
-        for (Application app : Offerapps) {
-            System.out.println("app user: "+ app);
-            AnchorPane card = createOfferAppCard(app);
-
-            offerAppsContainer.getChildren().add(card);
-        }
-        // offersContainer.getChildren().clear();
-        appssScrollPane.setContent(offerAppsContainer);
-    }*/
     public void populateApps() {
         System.out.println("off.getId(): " + off.getId());
         // Fetch applications for the offer
@@ -207,21 +218,24 @@ public class OfferApps {
             gifImageView.setFitWidth(100);
             gifImageView.setFitHeight(100);
 
-
-
         });
+//get the fieldssss
+
+        Label firstNameLabel = new Label("First Name: " + App.getUserbyidd(App.getUser_id()).getFname());
+        Button SMSButton = new Button("Send SMS");
+        SMSButton.setLayoutX(200);
+        SMSButton.setLayoutY(200);
+        SMSButton .getStyleClass().add("sms-button");
+        SMSButton.setOnAction(event -> sendSMS(App));
 
 
 
         card.getChildren().addAll(imageView, FirstnamePrefixLabel, FirstnameLabel, LastnPrefixLabel, LastnLabel,
-                PhonePrefixLabel, PhoneLabel, EmailPrefixLabel, EmailLabel,seeResumeButton,DeleteappButton,gifImageView
+                PhonePrefixLabel, PhoneLabel, EmailPrefixLabel, EmailLabel,seeResumeButton,DeleteappButton,gifImageView,SMSButton
               );
 
         return card;
     }
-
-
-
 
 
     private void displayCVImage(String cvFilePath) {
@@ -311,5 +325,34 @@ public class OfferApps {
     }
 
 
+
+    @FXML
+    private void sendSMS(Application app) {
+        String firstName = app.getUserbyidd(app.getUser_id()).getFname();
+        String lastName = app.getUserbyidd(app.getUser_id()).getLname();
+        String entrepriseName = off.getEntreprise_name();
+
+        String messageBody = String.format("Dear %s %s, Our company %s wants to set an interview date with you. Please contact us for further details.", firstName, lastName, entrepriseName);
+
+        try {
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            Message message = Message.creator(
+                            new PhoneNumber("+21694233067"),
+                            new PhoneNumber(TWILIO_PHONE_NUMBER),
+                            messageBody)
+                    .create();
+
+            System.out.println("SMS sent successfully!");
+        } catch (ApiException e) {
+            System.out.println("Failed to send SMS: " + e.getMessage());
+        }
+    }
+
+
+
+
 }
+
+
+
 

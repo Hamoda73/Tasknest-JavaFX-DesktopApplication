@@ -23,7 +23,14 @@
     -fx-font-family: Calibri;
 }
 
-
+.offerapp-card .sms-button {
+    -fx-pref-width: 150;
+    -fx-background-color: #442ea1;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-text-fill: white;
+    -fx-font-family: Calibri;
+}
 
 
 .offerapp-card {

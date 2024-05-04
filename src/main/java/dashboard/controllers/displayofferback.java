@@ -1,16 +1,18 @@
 package dashboard.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,16 +23,23 @@ import javafx.stage.Window;
 import tasknest.controllers.applications.Apply;
 import tasknest.controllers.applications.OfferApps;
 import tasknest.models.offers;
+import tasknest.models.users;
 import tasknest.services.OfferService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-
+import java.util.function.Predicate;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 public class displayofferback implements Initializable {
 
-
+    private ObservableList<offers> allOffersList = FXCollections.observableArrayList();
     @FXML
     ScrollPane offersScrollPane;
 
@@ -38,13 +47,29 @@ public class displayofferback implements Initializable {
     @FXML
    // private Pagination pagination;
     private static final int ITEMS_PER_PAGE = 3;
+    @FXML
+    private TextField searchField;
 
+    @FXML
+    private PieChart domainPieChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
-        populateOffers();
-        //setupPagination();
+        allOffersList.addAll(offerService.getAllOffers());
+        populateOffers(allOffersList);
+
+        // Listen for changes in the search field and filter offers accordingly
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterOffers(newValue);
+        });
+
+
+        allOffersList.addListener((ListChangeListener.Change<? extends offers> change) -> updateDomainPieChart());
+
+
+
+        updateDomainPieChart();
     }
 
     /*private void setupPagination() {
@@ -84,10 +109,19 @@ public class displayofferback implements Initializable {
         offersScrollPane.setContent(offersContainer);
     }*/
 
-    private void populateOffers() {
+   /* private void populateOffers() {
         List<offers> allOffers = offerService.getAllOffers();
         VBox offersContainer = new VBox(10);
         for (offers offer : allOffers) {
+            AnchorPane card = createOfferCard(offer);
+            offersContainer.getChildren().add(card);
+        }
+        offersScrollPane.setContent(offersContainer);
+    }*/
+
+    private void populateOffers(List<offers> offersList) {
+        VBox offersContainer = new VBox(10);
+        for (offers offer : offersList) {
             AnchorPane card = createOfferCard(offer);
             offersContainer.getChildren().add(card);
         }
@@ -216,13 +250,21 @@ public class displayofferback implements Initializable {
         deleteButton.setOnAction(event->  {
 
             offerService.supprimer(offer);
+         /*   String to = offer.getUser_id().getEmail();
+
+            String subject = "Offer Deleted Notification";
+            String body = "Dear " + offer.getUser_id().getFname() + ",\n\n"
+                    + "Your  offer has been deleted.\n\n"
+                    + "Regards.";
+
+            sendDeleteNotificationEmail(to);*/
 
             initialize( null, null);
         });
 
 
 
-        Image gifImage = new Image(getClass().getResourceAsStream("/images/letter.gif"));
+        /*Image gifImage = new Image(getClass().getResourceAsStream("/images/letter.gif"));
         ImageView gifImageView = new ImageView(gifImage);
 
 
@@ -235,17 +277,35 @@ public class displayofferback implements Initializable {
 
 
 
-        });
+        });*/
 
 
 
 
 
-        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, appsButton,gifImageView,deleteButton);
+        card.getChildren().addAll(imageView,namePrefixLabel ,nameLabel, DomainPrefixLabel,DomainLabel,postPrefixLabel, postLabel,descriptionPrefixLabel, descriptionLabel, localisationPrefixLabel,localisationLabel,periodPrefixLabel, periodValueLabel,salaryPrefixLabel, salaryLabel, appsButton/*,gifImageView*/,deleteButton);
 
         return card;
     }
 
+
+    private void filterOffers(String query) {
+        // Create a predicate to filter offers based on the search query
+        Predicate<offers> containsQuery = offer ->
+                offer.getEntreprise_name().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDomain().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPost().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getLocalisation().toLowerCase().contains(query.toLowerCase()) ||
+                        offer.getPeriod().toLowerCase().contains(query.toLowerCase()) ||
+                        String.valueOf(offer.getSalary()).toLowerCase().contains(query.toLowerCase());
+
+        // Filter the offers list based on the predicate
+        FilteredList<offers> filteredList = allOffersList.filtered(containsQuery);
+
+        // Update the display with the filtered offers
+        populateOffers(filteredList);
+    }
 
 
 
@@ -311,7 +371,7 @@ public class displayofferback implements Initializable {
     }
 
 
-    @FXML
+   @FXML
     private void navigateToDisplayuseroff() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/offer/Displayoffuser.fxml"));
@@ -322,5 +382,85 @@ public class displayofferback implements Initializable {
         }
     }
 
+    private void updateDomainPieChart() {
+        // Calculate domain counts from the list of offers
+        Map<String, Integer> domainCounts = new HashMap<>();
+
+        for (offers offer : allOffersList) {
+            String domain = offer.getDomain();
+            domainCounts.put(domain, domainCounts.getOrDefault(domain, 0) + 1);
+        }
+
+        // Create an observable list of PieChart.Data
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Map.Entry<String, Integer> entry : domainCounts.entrySet()) {
+            pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        }
+
+        // Set the data for the pie chart
+        domainPieChart.setData(pieChartData);
+        domainPieChart.setPrefSize(500, 500);
+    }
+
+ /*   private void sendDeleteNotificationEmail(String userEmail) {
+        String subject = "Application Deleted Notification";
+        String body = "Dear Applicant,\n\n"
+                + "Your application has been deleted by the administrator.\n\n"
+                + "Regards.";
+
+        sendEmail(userEmail, subject, body);
+    }
+
+  */
+   /* private void sendEmail(String to, String subject, String body) {
+        // Sender's email ID needs to be mentioned
+        String from = "your_email@gmail.com"; // Replace with your email address
+
+        // Assuming you are sending email from Gmail
+        String host = "smtp.gmail.com";
+
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.port", "587");
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.smtp.auth", "true");
+
+        // Get the Session object.// and pass username and password
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("majus.erij1@gmail.com", "dplc kmtq lwbr ggnn");
+            }
+        });
+
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+            // Set Subject: header field
+            message.setSubject(subject);
+
+            // Now set the actual message
+            message.setText(body);
+
+            // Send message
+            Transport.send(message);
+            System.out.println("Email sent successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
+*/
 
 }
+
