@@ -1,4 +1,4 @@
-package Tasknest.tests;
+package tasknest.tests;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,12 +9,14 @@ public class TaskNestMainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader=new FXMLLoader(getClass().getResource("/AddCv.fxml"));
+     FXMLLoader loader=new FXMLLoader(getClass().getResource("/CV/showAllCVS.fxml"));
+        // FXMLLoader loader=new FXMLLoader(getClass().getResource("/CV/showAllCVsBACK.fxml"));
+
         Parent root=loader.load();
         Scene scene=new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
-        primaryStage.setTitle("ADD Cv");
+        primaryStage.setTitle("TaskNest");
         primaryStage.show();
     }
 

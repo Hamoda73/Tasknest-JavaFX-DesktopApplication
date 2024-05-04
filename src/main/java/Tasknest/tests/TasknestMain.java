@@ -1,8 +1,6 @@
-package Tasknest.tests;
-import Tasknest.services.CvService;
-import Tasknest.models.CV;
-import Tasknest.models.Skill;
-import Tasknest.services.SkillService;
+package tasknest.tests;
+import tasknest.services.CvService;
+import tasknest.services.SkillService;
 
 public class TasknestMain {
     public static void main(String[] args) {

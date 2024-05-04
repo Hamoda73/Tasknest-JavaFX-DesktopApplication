@@ -1,4 +1,4 @@
-package Tasknest.utils;
+package tasknest.utils;
 
 import java.sql.*;
 
@@ -12,7 +12,7 @@ public class DataSource {
     private  final String PASSWORD = "";
     private  final String URL = "jdbc:mysql://127.0.0.1:3306/hh";
 
-    private DataSource(){
+    public DataSource(){
         try{
             connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
             System.out.println("Connecting to DB !");
