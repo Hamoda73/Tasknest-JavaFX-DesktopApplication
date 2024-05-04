@@ -1,12 +1,11 @@
 package tasknest.controllers.applications;
-/*
+
 
 
 
 
 import javax.mail.internet.MimeMessage;
-import com.twilio.exception.ApiException;
-import com.twilio.rest.proxy.v1.service.Session;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,18 +49,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
 import javafx.stage.Stage;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-*/
+
+
 public class OfferApps {
 
-   // private static final String ACCOUNT_SID = "ACad974bc2502471805035089fb98d9640";
-    //private static final String AUTH_TOKEN = "645cb256260e1df1aad66f4ce460f8c4";
-    //private static final String TWILIO_PHONE_NUMBER = "+19413402531";
 
 
-/*
+
+
 
     private Application selectedApp;
     private offers off = new offers();
@@ -79,17 +74,11 @@ public class OfferApps {
 
        System.out.println("off idd= " + off.getId());
        System.out.println("off user idd= " + user_id);
-       initialize();
+     //  initialize();
    }
 
 
-    public void initialize()  {
-        ApplicationService appS= new ApplicationService();
-        populateApps();
-        System.out.println("helloooooooooooo");
-       Twilio.init(ACCOUNT_SID, AUTH_TOKEN, TWILIO_PHONE_NUMBER);
 
-    }
 
 
     public void populateApps() {
@@ -204,7 +193,7 @@ public class OfferApps {
             applicationService.supprimer(App);
 
 
-                initialize();
+              //  initialize();
         });
 
         Image gifImage = new Image(getClass().getResourceAsStream("/images/bell.gif"));
@@ -226,7 +215,7 @@ public class OfferApps {
         SMSButton.setLayoutX(200);
         SMSButton.setLayoutY(200);
         SMSButton .getStyleClass().add("sms-button");
-        SMSButton.setOnAction(event -> sendSMS(App));
+
 
 
 
@@ -326,30 +315,8 @@ public class OfferApps {
 
 
 
-    @FXML
-    private void sendSMS(Application app) {
-        String firstName = app.getUserbyidd(app.getUser_id()).getFname();
-        String lastName = app.getUserbyidd(app.getUser_id()).getLname();
-        String entrepriseName = off.getEntreprise_name();
-
-        String messageBody = String.format("Dear %s %s, Our company %s wants to set an interview date with you. Please contact us for further details.", firstName, lastName, entrepriseName);
-
-        try {
-            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-            Message message = Message.creator(
-                            new PhoneNumber("+21694233067"),
-                            new PhoneNumber(TWILIO_PHONE_NUMBER),
-                            messageBody)
-                    .create();
-
-            System.out.println("SMS sent successfully!");
-        } catch (ApiException e) {
-            System.out.println("Failed to send SMS: " + e.getMessage());
-        }
-    }
 
 
-*/
 
 }
 
