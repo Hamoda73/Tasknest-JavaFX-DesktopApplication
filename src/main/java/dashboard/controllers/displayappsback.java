@@ -21,11 +21,20 @@ import tasknest.models.offers;
 import tasknest.services.ApplicationService;
 import tasknest.services.OfferService;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 public class displayappsback {
 
 
@@ -147,7 +156,7 @@ public class displayappsback {
         seeResumeButton.setOnAction(e -> displayCVImage(App.getcvImagePath()));
 
 
-
+       String userEmail = App.getUserbyidd(App.getUser_id()).getEmail();
         Button DeleteappButton = new Button("Delete");
         DeleteappButton.setLayoutX(380);
         DeleteappButton.setLayoutY(200);
@@ -156,6 +165,13 @@ public class displayappsback {
         DeleteappButton.setOnAction(event->  {
 
             applicationService.supprimer(App);
+
+            String to = App.getUserbyidd(App.getUser_id()).getEmail();
+            String subject = "Application Deleted Notification";
+            String body = "Dear " + App.getUserbyidd(App.getUser_id()).getFname() + ",\n\n"
+                    + "Your application  has been deleted.\n\n"
+                    + "Regards,\n" ;
+            sendDeleteNotificationEmail(userEmail);
 
 
             initialize();
@@ -223,8 +239,62 @@ public class displayappsback {
 
 
 
+    private void sendDeleteNotificationEmail(String userEmail) {
+        String subject = "Application Deleted Notification";
+        String body = "Dear Applicant,\n\n"
+                + "Your application has been deleted by the administrator.\n\n"
+                + "Regards.";
+
+        sendEmail(userEmail, subject, body);
+    }
 
 
+    private void sendEmail(String to, String subject, String body) {
+        // Sender's email ID needs to be mentioned
+        String from = "your_email@gmail.com"; // Replace with your email address
+
+        // Assuming you are sending email from Gmail
+        String host = "smtp.gmail.com";
+
+        // Get system properties
+        Properties properties = System.getProperties();
+
+        // Setup mail server
+        properties.setProperty("mail.smtp.host", host);
+        properties.setProperty("mail.smtp.port", "587");
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+        properties.setProperty("mail.smtp.auth", "true");
+
+        // Get the Session object.// and pass username and password
+        Session session = Session.getInstance(properties, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("majus.erij1@gmail.com", "dplc kmtq lwbr ggnn");
+            }
+        });
+
+        try {
+            // Create a default MimeMessage object.
+            MimeMessage message = new MimeMessage(session);
+
+            // Set From: header field of the header.
+            message.setFrom(new InternetAddress(from));
+
+            // Set To: header field of the header.
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+            // Set Subject: header field
+            message.setSubject(subject);
+
+            // Now set the actual message
+            message.setText(body);
+
+            // Send message
+            Transport.send(message);
+            System.out.println("Email sent successfully....");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
 
 
 }

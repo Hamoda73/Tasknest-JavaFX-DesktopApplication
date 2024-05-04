@@ -39,7 +39,7 @@ public class AddOffer {
     private Button submitButton;
     private Button HomeButton;
     private OfferService offerService;
-    private int static_user_id=2;
+    private int static_user_id=35;
 
     @FXML
     private void initialize() {

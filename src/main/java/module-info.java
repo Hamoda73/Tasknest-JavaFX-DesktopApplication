@@ -6,6 +6,7 @@ module Test{
    // requires org.apache.pdfbox;
     requires java.desktop;
     requires twilio;
+    requires java.mail;
 
     // requires javafx.web;
     // opens tasknest.controllers;

@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.chart.PieChart?>
 <AnchorPane prefHeight="785.0" prefWidth="1900.0" style="-fx-background-color: EA8D22FF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dashboard.controllers.displayofferback">
     <stylesheets>
         <URL value="@card.css" />
@@ -148,6 +149,7 @@
                     </children>
                 </HBox>
             </children>
+            <PieChart fx:id="domainPieChart" />
         </VBox>
     </children>
 </AnchorPane>

@@ -67,18 +67,7 @@ public class DisplayAllOffers implements Initializable {
     private VBox cardsContainer;
 
 
-    /*@Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        offerService = new OfferService();
 
-        allOffersList.addAll(offerService.getAllOffers());
-
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filterOffers(newValue);});
-
-        populateOffers();
-        setupPagination();
-    }*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         offerService = new OfferService();
@@ -98,13 +87,9 @@ public class DisplayAllOffers implements Initializable {
         });
 
         setupPagination();
+
     }
-   /* private void setupPagination() {
-        int pageCount = (int) Math.ceil((double) allOffersList.size() / ITEMS_PER_PAGE);
-        pagination = new Pagination(pageCount, 0);
-        pagination.setPageFactory(this::createPage);
-        offersScrollPane.setContent(pagination);
-    }*/
+
    private void setupPagination() {
        int pageCount = (int) Math.ceil((double) filteredOffersList.size() / ITEMS_PER_PAGE);
        pagination = new Pagination(pageCount, 0);
