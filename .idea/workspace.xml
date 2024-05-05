@@ -19,9 +19,6 @@
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -38,7 +35,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/21694/Downloads/Tasknest-JavaFX-DesktopApplication-main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/erijm/Tasknest-JavaFX-DesktopApplication-main/Tasknest-JavaFX-DesktopApplication-main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -99,10 +96,6 @@
       <workItem from="1714818123765" duration="10443000" />
       <workItem from="1714833915112" duration="8714000" />
       <workItem from="1714846745585" duration="12972000" />
-      <workItem from="1714866275744" duration="66000" />
-      <workItem from="1714866375518" duration="48000" />
-      <workItem from="1714902618749" duration="256000" />
-      <workItem from="1714920227008" duration="37000" />
     </task>
     <servers />
   </component>
