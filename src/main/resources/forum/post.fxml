@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="postAnchor" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tasknest.controllers.forum.postController">
+   <children>
+      <AnchorPane prefWidth="1363.0" style="-fx-background-color: #31768f;">
+         <children>
+            <HBox layoutY="16.0" prefHeight="761.0" prefWidth="1366.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="151.0" style="-fx-background-radius: 25;">
+                     <children>
+                        <ImageView id="retrunIcon" fitHeight="73.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/logo.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView id="logoImage" fitHeight="77.0" fitWidth="200.0" onMouseClicked="#goBack" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/back.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="70.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></ImageView>
+                        <Text fill="WHITE" onMouseClicked="#navigateToDisplayAllOffers" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="201.72265625">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="31.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="25.0" top="150.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                        <Text fill="WHITE" onMouseClicked="#redirectFreelancers" strokeType="OUTSIDE" strokeWidth="0.0" text="Freelancers" textAlignment="CENTER" wrappingWidth="199.01953125">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="31.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="25.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                        <Text fill="WHITE" onMouseClicked="#reclamation" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation" textAlignment="CENTER" wrappingWidth="201.01953125">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="31.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="150.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                        <Text fill="WHITE" onMouseClicked="#createPost" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Post" textAlignment="CENTER" wrappingWidth="201.01953125">
+                           <font>
+                              <Font name="Calibri Bold Italic" size="31.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                        <ImageView id="addIcon" fitHeight="73.0" fitWidth="80.0" onMouseClicked="#createPost" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="70.0" left="65.0" />
+                           </VBox.margin>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="761.0" prefWidth="893.0">
+                     <children>
+                        <AnchorPane prefHeight="750.0" prefWidth="1141.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+                           <children>
+                              <HBox layoutX="12.0" layoutY="616.0" prefHeight="50.0" prefWidth="1141.0">
+                                 <children>
+                                    <TextField fx:id="commentField" prefHeight="44.0" prefWidth="340.0" promptText="Add Comment" style="-fx-border-color: #6cb9b9; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <HBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Button mnemonicParsing="false" onMouseClicked="#comment" style="-fx-background-color: #6cb9b9; -fx-background-radius: 25;" text="Post Comment" textFill="WHITE">
+                                       <font>
+                                          <Font name="Calibri Bold Italic" size="28.0" />
+                                       </font>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox layoutX="48.0" layoutY="263.0">
+                                 <children>
+                                    <VBox prefHeight="45.0" prefWidth="23.0">
+                                       <children>
+                                          <ImageView fx:id="likeImg" fitHeight="34.0" fitWidth="39.0" onMouseClicked="#like" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/nolike.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                          <Text fx:id="likeNumber" fill="#67c5e8" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" underline="true">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Text>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="45.0" prefWidth="45.0">
+                                       <children>
+                                          <ImageView fx:id="dislikeImg" fitHeight="34.0" fitWidth="35.0" onMouseClicked="#dislike" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/nodislike.png" />
+                                             </image>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </ImageView>
+                                          <Text fx:id="dislikeNumber" fill="#5bccf8" strokeType="OUTSIDE" strokeWidth="0.0" text="0" underline="true">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Text>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <Text fx:id="userNameField" layoutX="107.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User name">
+                                 <font>
+                                    <Font name="Calibri" size="22.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="categoryField" fill="#74ebd5" layoutX="48.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post category" underline="true">
+                                 <font>
+                                    <Font name="Cambria" size="37.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Text>
+                              <HBox layoutX="377.0" layoutY="251.0" prefHeight="65.0" prefWidth="249.0">
+                                 <children>
+                                    <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editPost" prefHeight="50.0" prefWidth="113.0" style="-fx-background-color: #6cb9b9; -fx-background-radius: 25;" text="Edit" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" right="5.0" top="10.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="Calibri Bold Italic" size="28.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#delPost" style="-fx-background-radius: 25; -fx-background-color: #6cb9b9;" text="Delete" textFill="WHITE">
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="Calibri Bold Italic" size="28.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Text fx:id="titleField" fill="#4a80f5" layoutX="28.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: transparent; -fx-background-radius: 25;" text="Post Title" wrappingWidth="593.13671875">
+                                 <font>
+                                    <Font name="Calibri Bold Italic" size="75.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="dateField" layoutX="48.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post date" wrappingWidth="470.7109375">
+                                 <font>
+                                    <Font name="Calibri" size="19.0" />
+                                 </font>
+                              </Text>
+                              <ImageView id="userImage" fx:id="userImg" fitHeight="73.0" fitWidth="90.0" layoutX="26.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/vector.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView id="speakIcon" fitHeight="66.0" fitWidth="95.0" layoutX="553.0" layoutY="171.0" onMouseClicked="#speak" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/aivoice.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <TextArea fx:id="postContent" editable="false" layoutX="24.0" layoutY="331.0" prefHeight="260.0" prefWidth="602.0" style="-fx-border-color: white;">
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="Cambria" size="26.0" />
+                                 </font>
+                              </TextArea>
+                              <VBox layoutX="638.0" layoutY="7.0" prefHeight="727.0" prefWidth="503.0">
+                                 <children>
+                                    <ImageView fx:id="postImage" fitHeight="262.0" fitWidth="496.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Text fill="#789ef8" strokeType="OUTSIDE" strokeWidth="0.0" text="Comments">
+                                       <font>
+                                          <Font name="Cambria Bold" size="35.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <ListView fx:id="commentsList" prefHeight="485.0" prefWidth="503.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

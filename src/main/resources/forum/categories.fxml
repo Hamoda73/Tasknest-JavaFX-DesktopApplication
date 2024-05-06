@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="categoryAnchorPane" prefHeight="768.0" prefWidth="1363.0" style="-fx-background-color: #31768f;" stylesheets="@forum.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tasknest.controllers.forum.categoriesController">
+   <children>
+      <HBox layoutY="16.0" prefHeight="681.0" prefWidth="1366.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="151.0" style="-fx-background-radius: 25;" stylesheets="@forum.css">
+               <children>
+                  <ImageView fx:id="logoImage" fitHeight="79.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="home" fill="WHITE" onMouseClicked="#navigateToDisplayAllOffers" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" textAlignment="CENTER" wrappingWidth="201.72265625">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="31.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="25.0" top="150.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="freelancers" fill="WHITE" onMouseClicked="#redirectFreelancers" strokeType="OUTSIDE" strokeWidth="0.0" text="Freelancers" textAlignment="CENTER" wrappingWidth="199.01953125">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="31.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="25.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="reclamation" fill="WHITE" onMouseClicked="#reclamation" strokeType="OUTSIDE" strokeWidth="0.0" text="Reclamation" textAlignment="CENTER" wrappingWidth="201.01953125">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="31.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="150.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <Text fx:id="createButton" fill="WHITE" onMouseClicked="#createPost" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Post" textAlignment="CENTER" wrappingWidth="201.01953125">
+                     <font>
+                        <Font name="Calibri Bold Italic" size="31.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Text>
+                  <ImageView fx:id="addIcon" fitHeight="82.0" fitWidth="95.0" onMouseClicked="#createPost" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/add.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="70.0" left="65.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <ListView fx:id="listOfCategories" prefHeight="681.0" prefWidth="1148.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

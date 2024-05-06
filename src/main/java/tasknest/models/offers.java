@@ -14,7 +14,7 @@ public class offers {
     private String description;
 
     private String localisation;
-
+//hello
     private String period;
 
     private float salary;
